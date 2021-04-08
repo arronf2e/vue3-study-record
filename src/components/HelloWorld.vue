@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, onMounted, reactive, onRenderTracked, onRenderTriggered, onErrorCaptured, onUpdated, onBeforeUpdate, onBeforeUnmount, onUnmounted, onActivated, onDeactivated, watchEffect } from 'vue'
+import { ref, defineComponent, onMounted, reactive, onRenderTracked, onRenderTriggered, onErrorCaptured, onUpdated, onBeforeUpdate, onBeforeUnmount, onUnmounted, onActivated, onDeactivated, watchEffect, toRefs } from 'vue'
 export default defineComponent({
   name: 'HelloWorld',
   props: {
@@ -22,7 +22,6 @@ export default defineComponent({
 
   beforeCreate() {
     console.log('hello before create');
-    
   },
 
   created() {
@@ -30,13 +29,13 @@ export default defineComponent({
   },
 
   setup: (props, ctx) => {
-
     watchEffect(() => {
       console.log(props.msg, 'props.msg');
     })
 
-    console.log(ctx.attrs, ctx.slots, ctx.emit, 'ctx');
+    const { msg } = toRefs(props)
 
+    console.log(ctx.attrs, ctx.slots, ctx.emit, 'ctx', msg);
     const countAdd = () => count.value++
 
     onMounted(() => {
